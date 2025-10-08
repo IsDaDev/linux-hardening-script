@@ -11,6 +11,10 @@ function showHelp() {
     echo "Alternative:"
     echo "sudo su -"
     echo "$0" 
+    showFlags
+}
+
+function showFlags() {
     echo ""
     echo "Flags:"
     echo "    -v <filename>"
@@ -25,12 +29,12 @@ fi
 
 # check if the user runs the script using the -v flag
 if [ "$1" != "-v" ]; then
-    showHelp
+    showFlags
 fi
 
 # check if the user runs the script only has one arg
-if [ [ $# -eq 1 ] ]; then
-    showHelp
+if [ $# -eq 1 ]; then
+    showFlags
 fi
 
 # install dependencies
