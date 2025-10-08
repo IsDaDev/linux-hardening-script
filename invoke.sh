@@ -3,8 +3,10 @@
 # check if the user running the script has enough root
 if [ "$USER" != "root" ]; then
     echo "Please run this script as root or sudo"
-    echo "Use: sudo $0"
-    echo "Use: sudo su -; ./$0" 
+    echo "sudo $0"
+    echo "Alternative:"
+    echo "sudo su -"
+    echo "$0" 
     exit -1
 fi
 
