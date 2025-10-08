@@ -10,7 +10,7 @@ if [ "$USER" != "root" || "$1" != "-v" ]; then
     echo ""
     echo "Flags:"
     echo "    -v <filename>"
-    echo "    print output into specified file
+    echo "    print output into specified file"
     exit -1
 fi
 
