@@ -1,14 +1,14 @@
 #!/bin/bash
 
+# check what user ran the script
 user=$(who | awk '{print $1}')
 
-if [ user -eq "root" ]; then
+# check if the permissions are enough
+if [ "$user" != "root" ]; then
     echo "Please run this script as root"
-    echo "use: sudo $0" 
+    echo "Use: sudo $0" 
     exit -1
 fi
-
-
 
 # install dependencies
 apt-get -y install openssh-server python3 ansible python3.12-venv python3-pip
