@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# check if the user running the script has enough root
-if [ "$USER" != "root" || "$1" != "-v" ]; then
+function showHelp() {
     echo "Please run this script as root or sudo"
     echo "sudo $0"
     echo "Alternative:"
@@ -12,6 +11,19 @@ if [ "$USER" != "root" || "$1" != "-v" ]; then
     echo "    -v <filename>"
     echo "    print output into specified file"
     exit -1
+}
+
+# check if the user running the script has enough root
+if [ "$USER" != "root" ]; then
+    showHelp
+fi
+
+if [ "$1" != "-v" ]; then
+    showHelp
+fi
+
+if [ [ $# -eq 1 ] ]; then
+    showHelp
 fi
 
 # install dependencies
