@@ -1,12 +1,16 @@
 #!/bin/bash
 
 # check if the user running the script has enough root
-if [ "$USER" != "root" ]; then
+if [ "$USER" != "root" || "$1" != "-v" ]; then
     echo "Please run this script as root or sudo"
     echo "sudo $0"
     echo "Alternative:"
     echo "sudo su -"
     echo "$0" 
+    echo ""
+    echo "Flags:"
+    echo "    -v <filename>"
+    echo "    print output into specified file
     exit -1
 fi
 
@@ -30,5 +34,10 @@ ymlFile=UBUNTU24-CIS/site.yml
 # replace host: all to host: localhost
 sed 's/hosts: all/hosts: localhost/' -i $ymlFile
 
-# run playbook
-ansible-playbook -i inventory $ymlFile -u ansible --become
+if [ $1 = "-v" ]; then
+    # run playbook and log into specified file
+    ansible-playbook -i inventory $ymlFile -u ansible --become >> $2 
+else
+    # run playbook
+    ansible-playbook -i inventory $ymlFile -u ansible --become
+fi
