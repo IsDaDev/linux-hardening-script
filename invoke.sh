@@ -19,6 +19,8 @@ function showFlags() {
     echo "Flags:"
     echo "    -v <filename>"
     echo "    print output into specified file"
+    echo ""
+    echo "Example usage: $0 -v output.txt"
     exit -1
 }
 
@@ -28,7 +30,7 @@ if [ "$USER" != "root" ]; then
 fi
 
 # check if the user runs the script using the -v flag
-if [ "$1" != "-v" ]; then
+if [ "$1" ] && [ "$1" != "-v" ]; then
     showFlags
 fi
 
