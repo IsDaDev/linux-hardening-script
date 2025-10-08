@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ymlFile=UBUNTU24-CIS/site.yml
+ansibleDir=UBUNTU24-CIS
+ymlFile=$ansibleDir/site.yml
 outputFile=output.log
 
 function showHelp() {
@@ -51,8 +52,13 @@ bash -c "source .venv/bin/activate && pip install passlib"
 # create library for ssh-demon
 mkdir -p /run/sshd
 
-# fetch repo
-git clone https://github.com/ansible-lockdown/UBUNTU24-CIS
+# check if directory for ansible-lockdown already exists
+if [ "$ansibleDir" ]; then 
+    echo "Directory already exists, no new directory created"
+else 
+    # fetch repo
+    git clone https://github.com/ansible-lockdown/UBUNTU24-CIS
+fi
 
 # replace host: all to host: localhost
 sed 's/hosts: all/hosts: localhost/' -i $ymlFile
