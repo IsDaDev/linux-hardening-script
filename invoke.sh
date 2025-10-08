@@ -1,7 +1,12 @@
 #!/bin/bash
 
+ymlFile=UBUNTU24-CIS/site.yml
+outputFile=output.log
+
 function showHelp() {
+    echo ""
     echo "Please run this script as root or sudo"
+    echo ""
     echo "sudo $0"
     echo "Alternative:"
     echo "sudo su -"
@@ -18,10 +23,12 @@ if [ "$USER" != "root" ]; then
     showHelp
 fi
 
+# check if the user runs the script using the -v flag
 if [ "$1" != "-v" ]; then
     showHelp
 fi
 
+# check if the user runs the script only has one arg
 if [ [ $# -eq 1 ] ]; then
     showHelp
 fi
@@ -41,15 +48,14 @@ mkdir -p /run/sshd
 # fetch repo
 git clone https://github.com/ansible-lockdown/UBUNTU24-CIS
 
-ymlFile=UBUNTU24-CIS/site.yml
-
 # replace host: all to host: localhost
 sed 's/hosts: all/hosts: localhost/' -i $ymlFile
 
-if [ $1 = "-v" ]; then
-    # run playbook and log into specified file
-    ansible-playbook -i inventory $ymlFile -u ansible --become >> $2 
-else
-    # run playbook
-    ansible-playbook -i inventory $ymlFile -u ansible --become
+# check if a parameter for outputfile is given
+if [ -n "$2" ]; then
+    outputFile="$2"
 fi
+
+# Run playbook and log into file
+ansible-playbook -i inventory "$ymlFile" -u ansible --become | tee "$outputFile"
+
