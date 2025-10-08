@@ -14,8 +14,10 @@ mkdir -p /run/sshd
 # fetch repo
 git clone https://github.com/ansible-lockdown/UBUNTU24-CIS
 
+ymlFile=UBUNTU24-CIS/site.yml
+
 # replace host: any to host: localhost
-sed 's/hosts: any/hosts: localhost/' -i site.yml
+sed 's/hosts: any/hosts: localhost/' -i $ymlFile
 
 # run playbook
-ansible-playbook -i inventory site.yml -u ansible --become
+ansible-playbook -i inventory $ymlFile -u ansible --become
