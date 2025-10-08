@@ -13,10 +13,9 @@ apt-get -y install openssh-server python3 ansible python3.12-venv python3-pip
 
 # create and source virtual environment
 python3 -m venv .venv
-source .venv
 
 # install python requirements
-pip install passlib
+bash -c "source .venv/bin/activate && pip install passlib"
 
 # create library for ssh-demon
 mkdir -p /run/sshd
@@ -26,8 +25,8 @@ git clone https://github.com/ansible-lockdown/UBUNTU24-CIS
 
 ymlFile=UBUNTU24-CIS/site.yml
 
-# replace host: any to host: localhost
-sed 's/hosts: any/hosts: localhost/' -i $ymlFile
+# replace host: all to host: localhost
+sed 's/hosts: all/hosts: localhost/' -i $ymlFile
 
 # run playbook
 ansible-playbook -i inventory $ymlFile -u ansible --become
