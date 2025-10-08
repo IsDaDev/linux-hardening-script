@@ -53,7 +53,7 @@ bash -c "source .venv/bin/activate && pip install passlib"
 mkdir -p /run/sshd
 
 # check if directory for ansible-lockdown already exists
-if [ "$ansibleDir" ]; then 
+if [ -d "$ansibleDir" ]; then 
     echo "Directory already exists, no new directory created"
 else 
     # fetch repo
