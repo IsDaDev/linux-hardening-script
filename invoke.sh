@@ -1,12 +1,10 @@
 #!/bin/bash
 
-# check what user ran the script
-user=$(who | awk '{print $1}')
-
-# check if the permissions are enough
-if [ "$user" != "root" ]; then
-    echo "Please run this script as root"
-    echo "Use: sudo $0" 
+# check if the user running the script has enough root
+if [ "$USER" != "root" ]; then
+    echo "Please run this script as root or sudo"
+    echo "Use: sudo $0"
+    echo "Use: sudo su -; ./$0" 
     exit -1
 fi
 
