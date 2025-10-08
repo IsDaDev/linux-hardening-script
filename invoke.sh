@@ -68,6 +68,6 @@ if [ -n "$2" ]; then
     outputFile="$2"
 fi
 
-# Run playbook and log into file
-ansible-playbook -i inventory "$ymlFile" -u ansible --become | tee "$outputFile"
+# Run playbook and log into file (also format color)
+script -q -c "ansible-playbook -i inventory "$ymlFile" -u ansible --become" /dev/null | tee "$outputFile"
 
